@@ -1,5 +1,5 @@
-## Liri Bot
+# Liri Bot
 
-# A node/command line app
+## A node/command line app
 
 TBD
