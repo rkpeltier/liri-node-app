@@ -26,7 +26,10 @@ axios.get(queryUrlBand).then(function(response) {
             //"I want it that way" via spotify
         }
 
+        
     };
+
+    //Try adding a switch
 
     
 
