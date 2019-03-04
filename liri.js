@@ -81,34 +81,29 @@ function spotifyThis() {
 
 //Movie this Function
 function movieThis() {
-  var url = 'https://omdbapi.com/?t=' + input + '&apikey=trilogy'
+  var url = 'https://omdbapi.com/?t=' + input + '&apikey=e12541f8'
   axios.get(url).then(function(resp){
-    for (var i = 0; i < resp.length; i++){
-      if(resp.title !== undefined) {
         console.log("Movie Title: " + resp.title);
         console.log("Year: " + resp.year);
         console.log("IMDB Rating: " + resp.imdbRating);
         console.log("Language: " + resp.language);
         console.log("Plot: " + resp.plot);
         console.log("Actors: " + resp.actors);
-      } else {
-        movieThisError();
-      };
-  };
-  });
+
+  }); //Handle error case
 };
 
-function movieThisError() {
-  var url = 'https://omdbapi.com/?t=mr+nobody&apikey=trilogy' //adding movie Mr. Nobody to url
-  axios.get(url).then(function(resp){
-      console.log("Movie Title: " + resp.title);
-      console.log("Year: " + resp.year);
-      console.log("IMDB Rating: " + resp.imdbRating);
-      console.log("Language: " + resp.language);
-      console.log("Plot: " + resp.plot);
-      console.log("Actors: " + resp.actors);
-  });
-};
+// function movieThisError() {
+//   var url = 'https://omdbapi.com/?t=mr+nobody&apikey=trilogy' //adding movie Mr. Nobody to url
+//   axios.get(url).then(function(resp){
+//       console.log("Movie Title: " + resp.title);
+//       console.log("Year: " + resp.year);
+//       console.log("IMDB Rating: " + resp.imdbRating);
+//       console.log("Language: " + resp.language);
+//       console.log("Plot: " + resp.plot);
+//       console.log("Actors: " + resp.actors);
+//   });
+// };
 
 
 //Do it function
