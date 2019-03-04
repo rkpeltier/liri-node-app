@@ -22,7 +22,7 @@ switch (action) {
       break;
     
     case "do-what-it-says":
-      //function
+      doWhatItSays();
       break;
     }
 
@@ -30,9 +30,12 @@ switch (action) {
 function concertThis() {
   var queryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp"
   axios.get(queryUrl).then(function(resp){
-    console.log("Venue Name " + resp.data[0].venue.name);
-    console.log("Location: " + resp.data[0].venue.city);
-    console.log("Date: " + moment(resp.data[0].datetime).format("MM/DD/YYYY"));
+    for (var i = 0; i < resp.data.length; i++) {
+      var bands = resp.data[i];
+      console.log("Venue Name " + bands.venue.name);
+      console.log("Location: " + bands.venue.city);
+      console.log("Date: " + moment(bands.datetime).format("MM/DD/YYYY"));
+    }; //Need to handle error
   });
 };
 
@@ -53,9 +56,50 @@ function spotifyThis() {
 });
 };
 
+//Need to work out how to handle spotify error
+
+// function spotifyThisError() {
+//   spotify.search({ type: 'track', query: input, limit: 1}, function(error, data){
+//     if(!error){
+//     for(var i = 0; i < data.tracks.items.length; i++){
+//         var spotifyData = data.tracks.items[i];
+//             console.log("Artist: " + spotifyData.artists[0].name);
+//             console.log("Song: " + spotifyData.name);
+//             console.log("Album: " + spotifyData.album.name);
+//             console.log("Preview URL: " + spotifyData.preview_url);
+//         } 
+//     } else {
+//     console.log(error);
+//     }
+//     fs.writeFile("random.txt", spotifyData, function(err){
+//       if(err) {
+//         console.log(error);
+//       }
+//     })
+// });
+// };
+
 //Movie this Function
 function movieThis() {
   var url = 'https://omdbapi.com/?t=' + input + '&apikey=trilogy'
+  axios.get(url).then(function(resp){
+    for (var i = 0; i < resp.length; i++){
+      if(resp.title !== undefined) {
+        console.log("Movie Title: " + resp.title);
+        console.log("Year: " + resp.year);
+        console.log("IMDB Rating: " + resp.imdbRating);
+        console.log("Language: " + resp.language);
+        console.log("Plot: " + resp.plot);
+        console.log("Actors: " + resp.actors);
+      } else {
+        movieThisError();
+      };
+  };
+  });
+};
+
+function movieThisError() {
+  var url = 'https://omdbapi.com/?t=mr+nobody&apikey=trilogy' //adding movie Mr. Nobody to url
   axios.get(url).then(function(resp){
       console.log("Movie Title: " + resp.title);
       console.log("Year: " + resp.year);
@@ -66,7 +110,13 @@ function movieThis() {
   });
 };
 
+
 //Do it function
 function doWhatItSays() {
-  
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    console.log(data);
+    if (error) {
+      return console.log(error);
+    }
+});
 }
